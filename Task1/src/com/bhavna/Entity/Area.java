@@ -3,7 +3,6 @@ package com.bhavna.Entity;
 public class Area extends State{
 
 	
-	
 	public Area(String countryName, String stateName, long ZipCode) {
 		super(countryName, stateName);
 		this.ZipCode = ZipCode;
