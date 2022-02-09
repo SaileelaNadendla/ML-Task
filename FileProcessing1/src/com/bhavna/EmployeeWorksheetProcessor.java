@@ -1,6 +1,5 @@
 package com.bhavna;
 
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,7 +15,14 @@ import org.apache.commons.lang3.StringUtils;
 public class EmployeeWorksheetProcessor {
 
 	static class EmployeeWorksheet {
-
+		
+		private String name;
+		private String dayOfMonth;
+		private String hourOfDay;
+		private String meridiem;
+		private Integer lineNumber;
+		private String errorMessage;
+		
 		public EmployeeWorksheet(String[] data, Integer lineNumber) {
 			this.name = data[0];
 			this.dayOfMonth = data[1];
@@ -30,13 +36,6 @@ public class EmployeeWorksheetProcessor {
 			this.lineNumber = lineNumber;
 		}
 
-		private String name;
-		private String dayOfMonth;
-		private String hourOfDay;
-		private String meridiem;
-		private Integer lineNumber;
-		private String errorMessage;
-
 		@Override
 		public String toString() {
 			return "EmployeeWorksheet [name=" + name + ", dayOfMonth=" + dayOfMonth + ", hourOfDay=" + hourOfDay
@@ -45,7 +44,7 @@ public class EmployeeWorksheetProcessor {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NullPointerException {
 		Path path = Paths.get("employee_worksheet.txt");
 
 		Map<String, List<EmployeeWorksheet>> workSheetMap = new HashMap<String, List<EmployeeWorksheet>>() {
@@ -76,12 +75,12 @@ public class EmployeeWorksheetProcessor {
 			lines.forEach(line -> {
 				{
 					if (StringUtils.isBlank(line)) {
-						workSheetMap.get("SUCCESS")
+						workSheetMap.get("FAILURE")
 								.add(new EmployeeWorksheet("EmptyLine", lineNumber.currentLineNumber()));
 					} else {
 						String[] tokens = line.split("\\t");
 						if (tokens.length != 4) {
-							workSheetMap.get("SUCCESS")
+							workSheetMap.get("FAILURE")
 									.add(new EmployeeWorksheet("Data Missing", lineNumber.currentLineNumber()));
 						} else {
 							workSheetMap.get("FAILURE")
