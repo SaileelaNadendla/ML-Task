@@ -38,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public String updateEmployee(Employee employee, Integer id) {
-		if (repo.existsById(id)) {
+		if (id==employee.getId()) {
 			repo.save(employee);
 			return "Employee details updated...!";
 
